@@ -37,6 +37,16 @@ archive/             Prior concepts
 .claude/             CLAUDE.md guidance, sub-agents, and slash commands
 ```
 
+## First-time setup (enable the leak guard)
+
+```sh
+git config core.hooksPath .githooks   # activates the pre-commit location-leak scanner
+```
+
+Leak prevention runs in three layers: strict `.gitignore`, a pre-commit content scanner
+(`scripts/check-leaks.sh`), and a CI job (`.github/workflows/leak-scan.yml`) that re-checks every
+push. Audit manually anytime with `scripts/check-leaks.sh all`.
+
 ## Working with Claude
 
 Read `CLAUDE.md` first. Specialist sub-agents live in `.claude/agents/`; privacy and classification

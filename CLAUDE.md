@@ -154,8 +154,10 @@ private/  → geospatial/ (source, processed, qgis, kml, geojson, rasters, expor
 ```
 
 - The **private** repo is the authoritative engineering record and **must be versioned, backed
-  up, and reproducible** (≥1 local copy, ≥1 private remote git, ≥1 additional backup; use Git LFS
-  / DVC / git-annex / restic for large artifacts — never leave them outside version control).
+  up, and reproducible**. Accepted baseline (owner's decision): **local working copy + a private
+  GitHub remote** — a third/offline backup is optional, not required. Use Git LFS for large
+  artifacts — never leave them outside version control, and never let important artifacts live only
+  on a single local machine.
 - The **public** repo contains only sanitized/generalized/synthetic products.
 - `private/sanitized-exports/` stages public-safe artifacts; **nothing moves to public until it
   passes privacy review.**
@@ -201,6 +203,20 @@ artifact?
 **Photos:** strip EXIF/GPS, check background landmarks (road frontage, mailbox, house number,
 driveway, unique buildings), avoid map-UI/parcel/aerial screenshots, prefer close-up construction
 shots, and use sanitized filenames (no address/parcel/road/county-GIS clues).
+
+## Automated leak prevention (defense in depth)
+
+The privacy gate above is enforced by tooling, not just discipline:
+
+1. **`.gitignore`** — blocks sensitive file types and location-token filenames.
+2. **Pre-commit hook** (`.githooks/pre-commit` → `scripts/check-leaks.sh staged`) — scans **content**
+   for sensitive file types, location-token filenames, GPS EXIF in images, and decimal `lat,lon`
+   coordinate patterns. Activate once per clone: `git config core.hooksPath .githooks`.
+3. **CI** (`.github/workflows/leak-scan.yml`) — re-runs the scanner on every push/PR, so a leak
+   can't reach GitHub even from a machine that never enabled the hook.
+
+A confirmed false positive can be committed with `ALLOW_UNSANITIZED=1 git commit …` — use sparingly
+and only after verifying. Run a manual audit anytime with `scripts/check-leaks.sh all`.
 
 ---
 

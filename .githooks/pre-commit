@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Public repo pre-commit guard: block location leaks before they enter history.
+# Activate once per clone:  git config core.hooksPath .githooks
+# Bypass a confirmed false positive: ALLOW_UNSANITIZED=1 git commit ...
+root="$(git rev-parse --show-toplevel)"
+exec "$root/scripts/check-leaks.sh" staged
