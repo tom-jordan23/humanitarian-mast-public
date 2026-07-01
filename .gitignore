@@ -1,0 +1,53 @@
+# PUBLIC repo .gitignore — strict. Assume this repo may be published.
+# Goal: never leak the private home-site location. See CLAUDE.md directive #2.
+
+# Never publish private site data
+/private/
+/docs/private/
+/diagrams/private/
+/geospatial/
+/site-engineering/
+
+# Never publish real geospatial artifacts
+*.kml
+*.kmz
+*.gpx
+*.geojson
+*.shp
+*.shx
+*.dbf
+*.prj
+*.qgz
+*.qgs
+
+# Avoid accidental location leakage (filename globs)
+# Distinctive tokens matched as substrings:
+*parcel*
+*survey*
+*site-map*
+*property-boundary*
+*aerial*
+*satellite*
+*address*
+# Short/ambiguous tokens anchored so they don't swallow innocent words
+# (e.g. bare "*plat*" would match "templates"):
+plat.*
+*.plat
+*-plat*
+*_plat*
+*plat-*
+csm.*
+*.csm
+*-csm*
+*_csm*
+*csm-*
+
+# Scratch / temp
+scratch/
+tmp/
+working/
+*.tmp
+*.bak
+*.aux.xml
+.qgis2/
+__pycache__/
