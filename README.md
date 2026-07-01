@@ -7,6 +7,8 @@ public repository holds **sanitized, generalized, and synthetic** engineering ar
 > **Success standard:** could be understood, packed, rebuilt, powered, troubleshot, and adapted by
 > a small field team under constrained conditions.
 
+📌 **Current state & next steps: [`STATUS.md`](STATUS.md).**
+
 ## Core goal
 
 By **November 15, 2026**, a safe, grounded, weather-ready mast station operating at the private
